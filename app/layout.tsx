@@ -1,30 +1,28 @@
-import { Geist, Geist_Mono, Inter } from "next/font/google"
+import { Outfit } from "next/font/google";
 
-import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
+import "./globals.css";
 import { cn } from "@/lib/utils";
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'})
-
-const fontMono = Geist_Mono({
+const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-mono",
-})
+  variable: "--font-outfit",
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+});
+
+export const metadata = {
+  title: "Zero Bleeds Challenge | Novo Nordisk Quiz",
+  description:
+    "Test your knowledge on Hemophilia A management and the latest FRONTIER clinical data.",
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", inter.variable)}
-    >
-      <body>
-        <ThemeProvider>{children}</ThemeProvider>
-      </body>
+    <html lang="en" className={cn(outfit.variable)}>
+      <body>{children}</body>
     </html>
-  )
+  );
 }
