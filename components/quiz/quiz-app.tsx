@@ -132,31 +132,26 @@ export function QuizApp() {
       </div>
 
       {/* Top bar: Q badge + Progress bar + Logo area */}
-      <div className="relative z-10 flex w-full items-center px-6 pt-3">
-        {/* Q Badge - top left */}
-        <div className="text-[2.5rem] leading-none font-black text-white drop-shadow-[0_3px_12px_rgba(0,0,0,0.4)]">
+      <div className="relative z-30">
+        {/* Q Badge - Centered deeper within the top-left blood splash */}
+        <div className="absolute top-[6vh] left-[8vw] z-30 text-6xl font-black text-white italic drop-shadow-[0_4px_16px_rgba(0,0,0,0.5)] lg:text-7xl xl:text-8xl">
           Q{currentIndex + 1}
         </div>
 
-        {/* Progress bar - centered, compact */}
-        <div className="flex flex-1 items-center justify-center px-8">
-          <div className="flex w-full max-w-[260px] items-center gap-3">
-            <div className="h-[6px] flex-1 overflow-hidden rounded-full bg-white/25">
-              <div
-                className="h-full rounded-full bg-[#1565C0] transition-all duration-500 ease-out"
-                style={{
-                  width: `${((currentIndex + 1) / totalQuestions) * 100}%`,
-                }}
-              />
-            </div>
-            <span className="text-sm font-bold whitespace-nowrap text-white">
-              {currentIndex + 1}/{totalQuestions}
-            </span>
+        {/* Progress Bar - Large, centered vertically with the logo, starts after the blood splash */}
+        <div className="absolute top-[5vh] right-[22%] left-[22%] z-30 flex items-center gap-4">
+          <div className="relative h-3 flex-1 overflow-hidden rounded-full bg-[#3D3D3D]/40 backdrop-blur-sm lg:h-4">
+            <div
+              className="h-full rounded-full bg-[#1565C0] shadow-[0_0_15px_rgba(21,101,192,0.5)] transition-all duration-700 ease-out"
+              style={{
+                width: `${((currentIndex + 1) / totalQuestions) * 100}%`,
+              }}
+            />
           </div>
+          <span className="text-base font-black text-white drop-shadow-md lg:text-lg">
+            {currentIndex + 1}/{totalQuestions}
+          </span>
         </div>
-
-        {/* Spacer for logo (already in BG image) */}
-        <div className="w-20" />
       </div>
 
       {/* Main Content Area — fills remaining space */}
