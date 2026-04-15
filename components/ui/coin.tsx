@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
 interface CoinProps {
-  variant: "gold" | "silver";
-  size?: number;
-  className?: string;
+  variant: "gold" | "silver"
+  size?: number
+  className?: string
 }
 
 export function Coin({ variant, size = 80, className = "" }: CoinProps) {
@@ -38,9 +38,23 @@ export function Coin({ variant, size = 80, className = "" }: CoinProps) {
           </filter>
         </defs>
         {/* Outer ring */}
-        <circle cx="50" cy="50" r="46" fill="url(#goldGrad)" filter="url(#goldShadow)" />
+        <circle
+          cx="50"
+          cy="50"
+          r="46"
+          fill="url(#goldGrad)"
+          filter="url(#goldShadow)"
+        />
         {/* Inner rim highlight */}
-        <circle cx="50" cy="50" r="42" fill="none" stroke="#FFE082" strokeWidth="1.5" opacity="0.6" />
+        <circle
+          cx="50"
+          cy="50"
+          r="42"
+          fill="none"
+          stroke="#FFE082"
+          strokeWidth="1.5"
+          opacity="0.6"
+        />
         {/* Inner circle */}
         <circle cx="50" cy="50" r="36" fill="url(#goldInner)" />
         {/* Star */}
@@ -57,9 +71,17 @@ export function Coin({ variant, size = 80, className = "" }: CoinProps) {
           opacity="0.7"
         />
         {/* Shine reflection */}
-        <ellipse cx="40" cy="35" rx="12" ry="8" fill="white" opacity="0.2" transform="rotate(-20, 40, 35)" />
+        <ellipse
+          cx="40"
+          cy="35"
+          rx="12"
+          ry="8"
+          fill="white"
+          opacity="0.2"
+          transform="rotate(-20, 40, 35)"
+        />
       </svg>
-    );
+    )
   }
 
   return (
@@ -92,9 +114,23 @@ export function Coin({ variant, size = 80, className = "" }: CoinProps) {
         </filter>
       </defs>
       {/* Outer ring */}
-      <circle cx="50" cy="50" r="46" fill="url(#silverGrad)" filter="url(#silverShadow)" />
+      <circle
+        cx="50"
+        cy="50"
+        r="46"
+        fill="url(#silverGrad)"
+        filter="url(#silverShadow)"
+      />
       {/* Inner rim */}
-      <circle cx="50" cy="50" r="42" fill="none" stroke="#D0D0D0" strokeWidth="1.5" opacity="0.6" />
+      <circle
+        cx="50"
+        cy="50"
+        r="42"
+        fill="none"
+        stroke="#D0D0D0"
+        strokeWidth="1.5"
+        opacity="0.6"
+      />
       {/* Inner circle */}
       <circle cx="50" cy="50" r="36" fill="url(#silverInner)" />
       {/* Star */}
@@ -111,7 +147,15 @@ export function Coin({ variant, size = 80, className = "" }: CoinProps) {
         opacity="0.7"
       />
       {/* Shine */}
-      <ellipse cx="40" cy="35" rx="12" ry="8" fill="white" opacity="0.15" transform="rotate(-20, 40, 35)" />
+      <ellipse
+        cx="40"
+        cy="35"
+        rx="12"
+        ry="8"
+        fill="white"
+        opacity="0.15"
+        transform="rotate(-20, 40, 35)"
+      />
     </svg>
-  );
+  )
 }

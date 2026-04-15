@@ -1,18 +1,17 @@
-"use client";
+"use client"
 
-import { Coin } from "@/components/ui/coin";
-import type { QuestionResult } from "@/lib/questions";
-import { RotateCcw } from "lucide-react";
+import Image from "next/image"
+import type { QuestionResult } from "@/lib/questions"
 
 interface FeedbackScreenProps {
-  result: QuestionResult;
-  questionText: string;
-  explanation: string;
-  refs: string[];
-  questionNumber: number;
-  totalQuestions: number;
-  onNext: () => void;
-  onRestart: () => void;
+  result: QuestionResult
+  questionText: string
+  explanation: string
+  refs: string[]
+  questionNumber: number
+  totalQuestions: number
+  onNext: () => void
+  onRestart: () => void
 }
 
 export function FeedbackScreen({
@@ -24,104 +23,102 @@ export function FeedbackScreen({
   onNext,
   onRestart,
 }: FeedbackScreenProps) {
-  const isCorrect = result.isCorrect;
-  const letterLabels = ["A", "B", "C", "D"];
+  const isCorrect = result.isCorrect
+  const letterLabels = ["A", "B", "C", "D"]
 
   return (
-    <div className="quiz-layout">
-      {/* Background decorations */}
-      <div className="blood-drop-decoration blood-drop-1" />
-      <div className="blood-drop-decoration blood-drop-2" />
-      <div className="blood-drop-decoration blood-drop-3" />
-      <div className="blood-drop-decoration blood-drop-4" />
-      <div className="blood-drop-decoration blood-drop-5" />
-
-      {/* Top left Q badge */}
-      <div className="q-badge">
-        Q{questionNumber}
-      </div>
-
-      {/* Novo Nordisk logo placeholder */}
-      <div className="novo-logo">
-        <svg width="50" height="50" viewBox="0 0 100 100" fill="none">
-          <circle cx="50" cy="30" r="14" stroke="white" strokeWidth="3" fill="none" />
-          <path d="M36 30 C36 30 42 50 50 50 C58 50 64 30 64 30" stroke="white" strokeWidth="3" fill="none" />
-          <path d="M30 55 L50 75 L70 55" stroke="white" strokeWidth="3" fill="none" />
-          <line x1="50" y1="50" x2="50" y2="75" stroke="white" strokeWidth="3" />
-        </svg>
-        <span className="novo-logo-text">novo nordisk®</span>
+    <div className="fixed inset-0 w-screen h-screen overflow-hidden flex flex-col font-outfit">
+      {/* Background */}
+      <div className="absolute inset-0">
+        <Image
+          src="/answerScreen/Correct&WrongBG.png"
+          alt="Background"
+          fill
+          className="object-cover"
+          priority
+        />
       </div>
 
       {/* Progress bar */}
-      <div className="progress-container">
-        <div className="progress-bar">
-          <div
-            className="progress-fill"
-            style={{
-              width: `${(questionNumber / totalQuestions) * 100}%`,
-            }}
-          />
+      <div className="relative z-10 w-full mt-12 px-12">
+        <div className="flex items-center gap-4">
+          <div className="flex-1 h-3 bg-white/20 rounded-full overflow-hidden backdrop-blur-sm">
+            <div
+              className="h-full bg-white transition-all duration-500 ease-out"
+              style={{
+                width: `${(questionNumber / totalQuestions) * 100}%`,
+              }}
+            />
+          </div>
+          <span className="text-white font-bold text-xl min-w-[60px]">
+            {questionNumber}/{totalQuestions}
+          </span>
         </div>
-        <span className="progress-text">
-          {questionNumber}/{totalQuestions}
-        </span>
       </div>
 
-      {/* Main feedback card */}
-      <div className="feedback-card-container">
-        <div
-          className={`feedback-card ${isCorrect ? "feedback-correct" : "feedback-incorrect"}`}
-        >
-          {/* Restart button */}
-          <button
-            onClick={onRestart}
-            className="restart-button"
-            type="button"
-          >
-            <RotateCcw size={16} />
-            <span>Restart</span>
-          </button>
-
-          <div className="feedback-content">
-            <div className="feedback-text-section">
-              <h2 className={`feedback-title ${isCorrect ? "text-correct" : "text-incorrect"}`}>
-                {isCorrect ? "Correct!" : "Not Quite!"}
-              </h2>
-              <p className="feedback-explanation">{explanation}</p>
-              {!isCorrect && (
-                <p className="correct-answer-label">
-                  Correct answer: {letterLabels[result.correctAnswer]}
-                </p>
-              )}
+      {/* Main Content Area */}
+      <div className="relative z-10 flex-1 flex items-center justify-center -mt-12">
+        <div className="w-full max-w-6xl px-8 flex flex-col items-center">
+          
+          {/* Feedback Card */}
+          <div className="relative w-full aspect-[16/8] flex items-center justify-center">
+            <Image
+              src={isCorrect ? "/answerScreen/correctAnswerCard.png" : "/answerScreen/WrongAnswerCard.png"}
+              alt="Feedback Card"
+              fill
+              className="object-contain"
+              priority
+            />
+            
+            {/* Overlay Content */}
+            <div className="relative z-20 w-full flex items-center pl-[12%] pr-[35%]">
+               <div className="flex flex-col gap-4">
+                  <h2 className={`text-6xl font-black italic tracking-tighter ${isCorrect ? "text-[#FFD700]" : "text-white"}`}>
+                    {isCorrect ? "CORRECT!" : "NOT QUITE!"}
+                  </h2>
+                  <p className="text-2xl font-bold text-white leading-tight max-w-xl">
+                    {explanation}
+                  </p>
+                  {!isCorrect && (
+                    <div className="mt-2 py-2 px-6 bg-white/10 rounded-lg inline-block self-start border border-white/20">
+                         <span className="text-[#FFD700] font-black mr-2 uppercase tracking-wide">Correct Answer:</span>
+                         <span className="text-white font-black text-xl">{letterLabels[result.correctAnswer]}</span>
+                    </div>
+                  )}
+               </div>
             </div>
-            <div className="feedback-coin-section">
-              <div className={`coin-glow ${isCorrect ? "coin-glow-gold" : "coin-glow-silver"}`}>
-                <Coin variant={isCorrect ? "gold" : "silver"} size={120} />
-              </div>
-            </div>
-          </div>
 
-          {/* Next button */}
-          <div className="feedback-actions">
-            <button
-              onClick={onNext}
-              className="next-button"
+            {/* Restart Button (using the provided asset if suitable, or a custom one) */}
+            <button 
+              onClick={onRestart} 
+              className="absolute top-[15%] right-[5%] z-30 group transition-transform hover:rotate-12"
               type="button"
             >
-              Next
+              <div className="relative w-16 h-16">
+                <Image src="/answerScreen/restartButton.png" alt="Restart" fill className="object-contain" />
+              </div>
             </button>
+          </div>
+
+          {/* Next Button */}
+          <div className="mt-12">
+             <button
+               onClick={onNext}
+               className="px-24 py-5 bg-[#E53935] text-white text-3xl font-black rounded-full shadow-2xl hover:bg-[#C62828] hover:-translate-y-1 transition-all active:scale-95"
+               type="button"
+             >
+               NEXT
+             </button>
           </div>
         </div>
       </div>
 
-      {/* References */}
-      <div className="refs-container">
+      {/* References Footer */}
+      <div className="relative z-10 w-full p-8 text-white/70 text-sm italic flex flex-wrap gap-x-8 justify-center bg-black/10 backdrop-blur-sm">
         {refs.map((ref, i) => (
-          <p key={i} className="ref-text">
-            {i + 1}. {ref}
-          </p>
+          <span key={i}>[{i + 1}] {ref}</span>
         ))}
       </div>
     </div>
-  );
+  )
 }

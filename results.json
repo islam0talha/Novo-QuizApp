@@ -170,5 +170,91 @@
         "isCorrect": true
       }
     ]
+  },
+  {
+    "id": "7a36fe09-f797-40bc-b427-a23af557054f",
+    "timestamp": "2026-04-14T21:22:38.091Z",
+    "totalQuestions": 11,
+    "correctCount": 9,
+    "score": 82,
+    "results": [
+      {
+        "questionIndex": 0,
+        "question": "Despite advances with non-factor therapies, which unmet need remains most relevant in Hemophilia A management?",
+        "selectedAnswer": 1,
+        "correctAnswer": 1,
+        "isCorrect": true
+      },
+      {
+        "questionIndex": 1,
+        "question": "What is the main mechanistic advantage of Mim8 compared to Emicizumab?",
+        "selectedAnswer": 1,
+        "correctAnswer": 1,
+        "isCorrect": true
+      },
+      {
+        "questionIndex": 2,
+        "question": "Which clinical scenario best highlights a potential differentiation of Mim8?",
+        "selectedAnswer": 1,
+        "correctAnswer": 1,
+        "isCorrect": true
+      },
+      {
+        "questionIndex": 3,
+        "question": "What practical limitation of emicizumab is reported in higher-weight patients?",
+        "selectedAnswer": 1,
+        "correctAnswer": 1,
+        "isCorrect": true
+      },
+      {
+        "questionIndex": 4,
+        "question": "Which statement is best supported for the Mim8 pen device?",
+        "selectedAnswer": 1,
+        "correctAnswer": 2,
+        "isCorrect": false
+      },
+      {
+        "questionIndex": 5,
+        "question": "Which outcome is most closely linked to better quality of life in hemophilia A?",
+        "selectedAnswer": 1,
+        "correctAnswer": 1,
+        "isCorrect": true
+      },
+      {
+        "questionIndex": 6,
+        "question": "Which patient-centered treatment feature is most consistently valued in preference studies?",
+        "selectedAnswer": 1,
+        "correctAnswer": 1,
+        "isCorrect": true
+      },
+      {
+        "questionIndex": 7,
+        "question": "In the phase 3 FRONTIER2 study, Mim8 prophylaxis showed what versus continued on-demand treatment in patients previously treated on demand?",
+        "selectedAnswer": 1,
+        "correctAnswer": 1,
+        "isCorrect": true
+      },
+      {
+        "questionIndex": 8,
+        "question": "What was the key efficacy endpoint used across FRONTIER efficacy presentations?",
+        "selectedAnswer": 1,
+        "correctAnswer": 1,
+        "isCorrect": true
+      },
+      {
+        "questionIndex": 9,
+        "question": "Which pediatric phase 3 FRONTIER3 interim result is accurate for once-weekly Mim8?",
+        "selectedAnswer": 1,
+        "correctAnswer": 2,
+        "isCorrect": false
+      },
+      {
+        "questionIndex": 10,
+        "question": "What did FRONTIER5 show about switching from emicizumab to Mim8?",
+        "selectedAnswer": 1,
+        "correctAnswer": 1,
+        "isCorrect": true
+      }
+    ]
   }
 ]

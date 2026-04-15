@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { Coin } from "@/components/ui/coin";
-import type { QuestionResult } from "@/lib/questions";
-import { Download, RotateCcw } from "lucide-react";
+import Image from "next/image"
+import type { QuestionResult } from "@/lib/questions"
+import { Download, RotateCcw } from "lucide-react"
 
 interface ResultsSummaryProps {
-  results: QuestionResult[];
-  totalQuestions: number;
-  onRestart: () => void;
+  results: QuestionResult[]
+  totalQuestions: number
+  onRestart: () => void
 }
 
 export function ResultsSummary({
@@ -15,93 +15,113 @@ export function ResultsSummary({
   totalQuestions,
   onRestart,
 }: ResultsSummaryProps) {
-  const correctCount = results.filter((r) => r.isCorrect).length;
+  const correctCount = results.filter((r) => r.isCorrect).length
 
   const handleDownload = async () => {
     try {
-      const response = await fetch("/api/download-results");
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "quiz-results.json";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      const response = await fetch("/api/download-results")
+      const blob = await response.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = "quiz-results.json"
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
     } catch (error) {
-      console.error("Download failed:", error);
+      console.error("Download failed:", error)
     }
-  };
+  }
 
   return (
-    <div className="quiz-layout">
-      {/* Background decorations */}
-      <div className="blood-drop-decoration blood-drop-1" />
-      <div className="blood-drop-decoration blood-drop-2" />
-      <div className="blood-drop-decoration blood-drop-3" />
-      <div className="blood-drop-decoration blood-drop-4" />
-      <div className="blood-drop-decoration blood-drop-5" />
-
-      {/* Novo Nordisk logo placeholder */}
-      <div className="novo-logo">
-        <svg width="50" height="50" viewBox="0 0 100 100" fill="none">
-          <circle cx="50" cy="30" r="14" stroke="white" strokeWidth="3" fill="none" />
-          <path d="M36 30 C36 30 42 50 50 50 C58 50 64 30 64 30" stroke="white" strokeWidth="3" fill="none" />
-          <path d="M30 55 L50 75 L70 55" stroke="white" strokeWidth="3" fill="none" />
-          <line x1="50" y1="50" x2="50" y2="75" stroke="white" strokeWidth="3" />
-        </svg>
-        <span className="novo-logo-text">novo nordisk®</span>
+    <div className="fixed inset-0 w-screen h-screen overflow-hidden flex flex-col font-outfit">
+      {/* Background */}
+      <div className="absolute inset-0">
+        <Image
+          src="/quetionsScreen/questionsBG.png"
+          alt="Background"
+          fill
+          className="object-cover"
+          priority
+        />
       </div>
 
       {/* Progress bar */}
-      <div className="progress-container">
-        <div className="progress-bar">
-          <div className="progress-fill" style={{ width: "100%" }} />
+      <div className="relative z-10 w-full mt-12 px-12">
+        <div className="flex items-center gap-4">
+          <div className="flex-1 h-3 bg-white/20 rounded-full overflow-hidden backdrop-blur-sm">
+            <div className="h-full bg-white w-full" />
+          </div>
+          <span className="text-white font-bold text-xl min-w-[60px]">
+            {totalQuestions}/{totalQuestions}
+          </span>
         </div>
-        <span className="progress-text">
-          {totalQuestions}/{totalQuestions}
-        </span>
       </div>
 
-      {/* Title */}
-      <div className="summary-header">
-        <h1 className="summary-title">Total Score</h1>
-        <p className="summary-subtitle">
-          You got {correctCount} out of {totalQuestions} correct!
-        </p>
-      </div>
+      {/* Main Content Area */}
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center -mt-8">
+        <div className="w-full max-w-4xl px-8 flex flex-col items-center">
+          
+          <h1 className="text-6xl font-black text-white italic tracking-tighter mb-8 drop-shadow-xl">
+            FINAL RESULTS
+          </h1>
 
-      {/* Coin grid */}
-      <div className="summary-card">
-        <div className="coin-grid">
-          {results.map((result, index) => (
-            <div
-              key={index}
-              className="coin-grid-item"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <Coin
-                variant={result.isCorrect ? "gold" : "silver"}
-                size={75}
-              />
-              <span className="coin-question-label">Q{index + 1}</span>
+          {/* Results Card */}
+          <div className="relative w-full aspect-[21/10] flex items-center justify-center p-12">
+            <Image
+              src="/resultScreen/ResultCard.png"
+              alt="Result Card"
+              fill
+              className="object-contain"
+            />
+            
+            <div className="relative z-20 w-full flex flex-col items-center px-24">
+               <div className="text-center mb-8">
+                  <span className="text-2xl font-bold text-[#002D54] opacity-70 uppercase tracking-widest">Your Score</span>
+                  <div className="text-8xl font-black text-[#E53935]">
+                    {correctCount}<span className="text-4xl text-[#002D54]/30 mx-2">/</span>{totalQuestions}
+                  </div>
+               </div>
+
+               {/* Coin Grid */}
+               <div className="flex flex-wrap justify-center gap-4 max-w-2xl">
+                 {results.map((result, index) => (
+                   <div key={index} className="relative group flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-500" style={{ animationDelay: `${index * 50}ms` }}>
+                      <div className="relative w-16 h-16 drop-shadow-lg">
+                        <Image
+                          src={result.isCorrect ? "/resultScreen/CorrectCoin.png" : "/resultScreen/wrongCoin.png"}
+                          alt={`Q${index+1}`}
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                      <span className="mt-1 text-[10px] font-black text-[#002D54]/50">Q{index + 1}</span>
+                   </div>
+                 ))}
+               </div>
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
 
-      {/* Actions */}
-      <div className="summary-actions">
-        <button onClick={onRestart} className="summary-btn summary-btn-restart" type="button">
-          <RotateCcw size={18} />
-          <span>Restart Quiz</span>
-        </button>
-        <button onClick={handleDownload} className="summary-btn summary-btn-download" type="button">
-          <Download size={18} />
-          <span>Download Results</span>
-        </button>
+          {/* Actions */}
+          <div className="flex gap-6 mt-12">
+            <button
+              onClick={onRestart}
+              className="flex items-center gap-3 px-12 py-4 bg-white text-[#002D54] rounded-full text-xl font-black hover:bg-gray-100 transition-all active:scale-95 shadow-xl"
+            >
+              <RotateCcw size={24} />
+              RESTART
+            </button>
+            <button
+              onClick={handleDownload}
+              className="flex items-center gap-3 px-12 py-4 bg-[#E53935] text-white rounded-full text-xl font-black hover:bg-[#C62828] transition-all active:scale-95 shadow-xl"
+            >
+              <Download size={24} />
+              DOWNLOAD
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  );
+  )
 }

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useCallback } from "react"
+import Image from "next/image"
 import {
   questions,
   type QuestionResult,
@@ -9,13 +10,14 @@ import {
 import { saveQuizAttempt } from "@/lib/actions"
 import { FeedbackScreen } from "./feedback-screen"
 import { ResultsSummary } from "./results-summary"
+import { StartScreen } from "./start-screen"
 
-type Phase = "question" | "feedback" | "summary"
+type Phase = "start" | "question" | "feedback" | "summary"
 
 export function QuizApp() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedOption, setSelectedOption] = useState<number | null>(null)
-  const [phase, setPhase] = useState<Phase>("question")
+  const [phase, setPhase] = useState<Phase>("start")
   const [results, setResults] = useState<QuestionResult[]>([])
   const [lastResult, setLastResult] = useState<QuestionResult | null>(null)
 
@@ -79,6 +81,15 @@ export function QuizApp() {
     setLastResult(null)
   }, [])
 
+  const handleStart = useCallback(() => {
+    setPhase("question")
+  }, [])
+
+  // START SCREEN
+  if (phase === "start") {
+    return <StartScreen onStart={handleStart} />
+  }
+
   // FEEDBACK SCREEN
   if (phase === "feedback" && lastResult) {
     return (
@@ -108,157 +119,111 @@ export function QuizApp() {
 
   // QUESTION SCREEN
   return (
-    <div className="quiz-layout">
-      {/* Background decorations */}
-      <div className="blood-drop-decoration blood-drop-1" />
-      <div className="blood-drop-decoration blood-drop-2" />
-      <div className="blood-drop-decoration blood-drop-3" />
-      <div className="blood-drop-decoration blood-drop-4" />
-      <div className="blood-drop-decoration blood-drop-5" />
-
-      {/* Top left Q badge */}
-      <div className="q-badge">Q{currentIndex + 1}</div>
-
-      {/* Novo Nordisk logo */}
-      <div className="novo-logo">
-        <svg width="50" height="50" viewBox="0 0 100 100" fill="none">
-          <circle
-            cx="50"
-            cy="30"
-            r="14"
-            stroke="white"
-            strokeWidth="3"
-            fill="none"
-          />
-          <path
-            d="M36 30 C36 30 42 50 50 50 C58 50 64 30 64 30"
-            stroke="white"
-            strokeWidth="3"
-            fill="none"
-          />
-          <path
-            d="M30 55 L50 75 L70 55"
-            stroke="white"
-            strokeWidth="3"
-            fill="none"
-          />
-          <line
-            x1="50"
-            y1="50"
-            x2="50"
-            y2="75"
-            stroke="white"
-            strokeWidth="3"
-          />
-        </svg>
-        <span className="novo-logo-text">novo nordisk®</span>
+    <div className="font-outfit fixed inset-0 flex h-screen w-screen flex-col overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0">
+        <Image
+          src="/quetionsScreen/questionsBG.png"
+          alt="Background"
+          fill
+          className="object-fit"
+          priority
+        />
       </div>
 
       {/* Progress bar */}
-      <div className="progress-container">
-        <div className="progress-bar">
-          <div
-            className="progress-fill"
-            style={{
-              width: `${((currentIndex + 1) / totalQuestions) * 100}%`,
-            }}
-          />
+      <div className="relative z-10 mt-12 w-full px-12">
+        <div className="flex items-center gap-4">
+          <div className="h-3 flex-1 overflow-hidden rounded-full bg-white/20 backdrop-blur-sm">
+            <div
+              className="h-full bg-white transition-all duration-500 ease-out"
+              style={{
+                width: `${((currentIndex + 1) / totalQuestions) * 100}%`,
+              }}
+            />
+          </div>
+          <span className="min-w-[60px] text-xl font-bold text-white">
+            {currentIndex + 1}/{totalQuestions}
+          </span>
         </div>
-        <span className="progress-text">
-          {currentIndex + 1}/{totalQuestions}
-        </span>
       </div>
 
-      {/* Main question card */}
-      <div className="question-card-container">
-        <div className="question-card">
-          {/* Decorative corner accents */}
-          <div className="card-corner card-corner-tl" />
-          <div className="card-corner card-corner-tr" />
-          <div className="card-corner card-corner-bl" />
-          <div className="card-corner card-corner-br" />
-
-          <div className="question-content">
-            <div className="question-header">
-              <span className="question-number-large">{currentIndex + 1}</span>
-              <h2 className="question-text">{currentQuestion.q}</h2>
-            </div>
-
-            {/* Medical icon */}
-            <div className="question-icon">
-              <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
-                <path
-                  d="M50 10 C50 10 35 30 35 50 C35 65 42 75 50 75 C58 75 65 65 65 50 C65 30 50 10 50 10Z"
-                  fill="#C62828"
-                />
-                <path
-                  d="M50 10 C50 10 42 25 40 40 C38 50 44 60 50 62 C50 62 50 10 50 10Z"
-                  fill="#E53935"
-                  opacity="0.7"
-                />
-                <rect
-                  x="70"
-                  y="20"
-                  width="4"
-                  height="30"
-                  rx="2"
-                  fill="#C62828"
-                />
-                <rect
-                  x="60"
-                  y="30"
-                  width="4"
-                  height="25"
-                  rx="2"
-                  fill="#C62828"
-                />
-                <circle cx="72" cy="55" r="3" fill="#C62828" />
-                <circle cx="62" cy="60" r="2" fill="#E53935" />
-                <path
-                  d="M68 18 L72 15 L76 18"
-                  stroke="#C62828"
-                  strokeWidth="2"
-                  fill="none"
-                />
-              </svg>
+      {/* Main Content Area */}
+      <div className="relative z-10 -mt-8 flex flex-1 items-center justify-center">
+        <div className="flex w-full max-w-7xl flex-col items-center px-8">
+          {/* Question Card */}
+          <div className="relative flex aspect-[21/9] w-full items-center justify-center p-12">
+            <Image
+              src="/quetionsScreen/questionCard.png"
+              alt="Question Card"
+              fill
+              className="object-contain"
+            />
+            <div className="relative z-20 max-w-4xl px-20 text-center">
+              <h2 className="text-3xl leading-tight font-extrabold text-[#002D54] md:text-4xl">
+                {currentQuestion.q}
+              </h2>
             </div>
           </div>
 
-          {/* Options grid */}
-          <div className="options-grid">
+          {/* Options Grid */}
+          <div className="mt-8 grid w-full max-w-5xl grid-cols-1 gap-x-12 gap-y-6 md:grid-cols-2">
             {currentQuestion.options.map((option, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedOption(index)}
-                className={`option-button ${selectedOption === index ? "option-selected" : ""}`}
+                className="group relative transition-transform hover:scale-[1.02] active:scale-[0.98]"
                 type="button"
               >
-                <span className="option-letter">{letterLabels[index]}.</span>
-                <span className="option-text">{option}</span>
+                <div className="relative flex h-24 w-full items-center">
+                  <Image
+                    src="/quetionsScreen/answerCard.png"
+                    alt="Option BG"
+                    fill
+                    className={`object-contain transition-opacity ${selectedOption === index ? "opacity-100" : "opacity-80 group-hover:opacity-90"}`}
+                  />
+                  {/* Selection Glow */}
+                  {selectedOption === index && (
+                    <div className="absolute inset-x-8 inset-y-4 z-20 rounded-xl border-2 border-[#E53935]" />
+                  )}
+                  <div className="relative z-30 flex w-full items-center px-12">
+                    <span
+                      className={`mr-4 text-2xl font-black ${selectedOption === index ? "text-[#E53935]" : "text-[#002D54]"}`}
+                    >
+                      {letterLabels[index]}.
+                    </span>
+                    <span className="text-left text-xl font-bold text-[#002D54]">
+                      {option}
+                    </span>
+                  </div>
+                </div>
               </button>
             ))}
+          </div>
+
+          {/* Confirm Button */}
+          <div className="mt-12">
+            <button
+              onClick={handleConfirm}
+              disabled={selectedOption === null}
+              className={`rounded-full px-16 py-4 text-2xl font-black transition-all duration-300 ${
+                selectedOption === null
+                  ? "cursor-not-allowed bg-gray-400 opacity-50"
+                  : "bg-[#E53935] text-white shadow-xl hover:-translate-y-1 hover:bg-[#C62828] hover:shadow-2xl"
+              }`}
+            >
+              CONFIRM
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Confirm button */}
-      <div className="confirm-container">
-        <button
-          onClick={handleConfirm}
-          disabled={selectedOption === null}
-          className="confirm-button"
-          type="button"
-        >
-          Confirm
-        </button>
-      </div>
-
-      {/* References */}
-      <div className="refs-container">
+      {/* References Footer */}
+      <div className="relative z-10 flex w-full flex-wrap justify-center gap-x-8 bg-black/10 p-8 text-sm text-white/70 italic backdrop-blur-sm">
         {currentQuestion.refs.map((ref, i) => (
-          <p key={i} className="ref-text">
-            {i + 1}. {ref}
-          </p>
+          <span key={i}>
+            [{i + 1}] {ref}
+          </span>
         ))}
       </div>
     </div>

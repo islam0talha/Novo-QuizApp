@@ -1,26 +1,26 @@
 export interface Question {
-  q: string;
-  options: string[];
-  correct: number;
-  explanation: string;
-  refs: string[];
+  q: string
+  options: string[]
+  correct: number
+  explanation: string
+  refs: string[]
 }
 
 export interface QuestionResult {
-  questionIndex: number;
-  question: string;
-  selectedAnswer: number;
-  correctAnswer: number;
-  isCorrect: boolean;
+  questionIndex: number
+  question: string
+  selectedAnswer: number
+  correctAnswer: number
+  isCorrect: boolean
 }
 
 export interface QuizAttempt {
-  id: string;
-  timestamp: string;
-  totalQuestions: number;
-  correctCount: number;
-  score: number;
-  results: QuestionResult[];
+  id: string
+  timestamp: string
+  totalQuestions: number
+  correctCount: number
+  score: number
+  results: QuestionResult[]
 }
 
 export const questions: Question[] = [
@@ -162,9 +162,7 @@ export const questions: Question[] = [
     correct: 2,
     explanation:
       "In the FRONTIER3 interim analysis, 74.3% of children on once-weekly Mim8 prophylaxis had zero treated bleeds after 26 weeks.",
-    refs: [
-      "Novo Nordisk. FRONTIER3 interim analysis presented at EAHAD 2025.",
-    ],
+    refs: ["Novo Nordisk. FRONTIER3 interim analysis presented at EAHAD 2025."],
   },
   {
     q: "What did FRONTIER5 show about switching from emicizumab to Mim8?",
@@ -181,4 +179,4 @@ export const questions: Question[] = [
       "Novo Nordisk. FRONTIER5 switching and patient-reported outcomes presented at ISTH 2025.",
     ],
   },
-];
+]

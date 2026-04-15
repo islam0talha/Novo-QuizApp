@@ -23,19 +23,20 @@
 }
 
 /* ---------- GLOBAL RESET ---------- */
-html {
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
   font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  overflow-x: hidden;
-  min-height: 100vh;
   background: var(--novo-blue-deep) !important;
   color: var(--novo-white) !important;
-  margin: 0;
-  padding: 0;
 }
 
 /* ---------- QUIZ LAYOUT ---------- */
@@ -47,8 +48,16 @@ body {
   min-height: 100vh;
   padding: 1.5rem 2rem 2rem;
   background:
-    radial-gradient(ellipse at 30% 20%, rgba(21, 101, 192, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 70% 80%, rgba(198, 40, 40, 0.08) 0%, transparent 50%),
+    radial-gradient(
+      ellipse at 30% 20%,
+      rgba(21, 101, 192, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 70% 80%,
+      rgba(198, 40, 40, 0.08) 0%,
+      transparent 50%
+    ),
     var(--novo-blue-deep);
   overflow: hidden;
 }
@@ -81,10 +90,16 @@ body {
   height: 160px;
   top: -30px;
   left: -20px;
-  background: radial-gradient(ellipse at 40% 30%, var(--novo-red-light), var(--novo-red-dark));
+  background: radial-gradient(
+    ellipse at 40% 30%,
+    var(--novo-red-light),
+    var(--novo-red-dark)
+  );
   border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
   transform: rotate(-15deg);
-  box-shadow: inset -10px -10px 30px rgba(0, 0, 0, 0.3), 0 0 40px rgba(198, 40, 40, 0.3);
+  box-shadow:
+    inset -10px -10px 30px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(198, 40, 40, 0.3);
   animation: float-slow 8s ease-in-out infinite;
 }
 
@@ -93,8 +108,14 @@ body {
   height: 90px;
   bottom: 80px;
   right: 40px;
-  background: radial-gradient(ellipse at 35% 35%, var(--novo-red-light), var(--novo-red));
-  box-shadow: inset -8px -8px 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(198, 40, 40, 0.2);
+  background: radial-gradient(
+    ellipse at 35% 35%,
+    var(--novo-red-light),
+    var(--novo-red)
+  );
+  box-shadow:
+    inset -8px -8px 20px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(198, 40, 40, 0.2);
   animation: float-slow 10s ease-in-out infinite reverse;
 }
 
@@ -103,8 +124,14 @@ body {
   height: 50px;
   bottom: 150px;
   right: 10px;
-  background: radial-gradient(ellipse at 35% 35%, var(--novo-red-light), var(--novo-red-dark));
-  box-shadow: inset -5px -5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(198, 40, 40, 0.15);
+  background: radial-gradient(
+    ellipse at 35% 35%,
+    var(--novo-red-light),
+    var(--novo-red-dark)
+  );
+  box-shadow:
+    inset -5px -5px 15px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(198, 40, 40, 0.15);
   animation: float-slow 7s ease-in-out infinite;
 }
 
@@ -113,7 +140,11 @@ body {
   height: 35px;
   bottom: 60px;
   right: 130px;
-  background: radial-gradient(ellipse at 35% 35%, var(--novo-red-light), var(--novo-red));
+  background: radial-gradient(
+    ellipse at 35% 35%,
+    var(--novo-red-light),
+    var(--novo-red)
+  );
   box-shadow: inset -4px -4px 10px rgba(0, 0, 0, 0.3);
   animation: float-slow 6s ease-in-out infinite reverse;
 }
@@ -123,14 +154,23 @@ body {
   height: 25px;
   top: 100px;
   right: 60px;
-  background: radial-gradient(ellipse at 35% 35%, var(--novo-red-light), var(--novo-red));
+  background: radial-gradient(
+    ellipse at 35% 35%,
+    var(--novo-red-light),
+    var(--novo-red)
+  );
   box-shadow: inset -3px -3px 8px rgba(0, 0, 0, 0.3);
   animation: float-slow 9s ease-in-out infinite;
 }
 
 @keyframes float-slow {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-12px) rotate(3deg); }
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(3deg);
+  }
 }
 
 /* ---------- Q BADGE ---------- */
@@ -307,8 +347,13 @@ body {
 }
 
 @keyframes icon-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 /* ---------- OPTIONS GRID ---------- */
@@ -418,7 +463,11 @@ body {
 }
 
 .feedback-incorrect {
-  background: linear-gradient(135deg, var(--novo-red) 0%, var(--novo-red-dark) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--novo-red) 0%,
+    var(--novo-red-dark) 100%
+  );
   color: var(--novo-white);
 }
 
