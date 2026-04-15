@@ -222,7 +222,7 @@ export function QuizApp() {
         </div>
 
         {/* Confirm Button Area — Shifted to the left relative to previous position */}
-        <div className="mt-8 flex w-full max-w-[1550px] justify-start pl-[50%]">
+        <div className="mt-2 flex w-full max-w-[1550px] justify-start pl-[50%]">
           <button
             onClick={handleConfirm}
             disabled={selectedOption === null}
@@ -243,8 +243,8 @@ export function QuizApp() {
       </div>
 
       {/* References Footer */}
-      <div className="relative z-10 w-full px-8 pt-1 pb-4">
-        <div className="flex flex-wrap gap-x-6 text-[11px] leading-relaxed text-white/40 italic lg:text-xs">
+      <div className="relative z-10 w-full px-8 pb-4">
+        <div className="flex flex-col gap-x-6 text-[11px] leading-relaxed text-white/40 italic lg:text-xs">
           {currentQuestion.refs.map((ref, i) => (
             <span key={i}>
               {i + 1}. {ref}
