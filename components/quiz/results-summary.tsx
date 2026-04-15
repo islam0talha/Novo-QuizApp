@@ -2,7 +2,6 @@
 
 import Image from "next/image"
 import type { QuestionResult } from "@/lib/questions"
-import { Download, RotateCcw } from "lucide-react"
 
 interface ResultsSummaryProps {
   results: QuestionResult[]
@@ -10,116 +9,90 @@ interface ResultsSummaryProps {
   onRestart: () => void
 }
 
-export function ResultsSummary({
-  results,
-  totalQuestions,
-  onRestart,
-}: ResultsSummaryProps) {
-  const correctCount = results.filter((r) => r.isCorrect).length
-
-  const handleDownload = async () => {
-    try {
-      const response = await fetch("/api/download-results")
-      const blob = await response.blob()
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement("a")
-      a.href = url
-      a.download = "quiz-results.json"
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
-    } catch (error) {
-      console.error("Download failed:", error)
-    }
+export function ResultsSummary({ results, onRestart }: ResultsSummaryProps) {
+  // Global click handler to restart the quiz
+  const handleGlobalClick = () => {
+    onRestart()
   }
 
   return (
-    <div className="fixed inset-0 w-screen h-screen overflow-hidden flex flex-col font-outfit">
-      {/* Background */}
+    <div
+      className="font-outfit fixed inset-0 flex h-screen w-screen cursor-pointer flex-col overflow-hidden"
+      onClick={handleGlobalClick}
+    >
+      {/* Background (Using same consistent BG) */}
       <div className="absolute inset-0">
         <Image
-          src="/quetionsScreen/questionsBG.png"
+          src="/answerScreen/Correct&WrongBG.png"
           alt="Background"
           fill
-          className="object-cover"
+          className="object-fit"
           priority
         />
       </div>
 
-      {/* Progress bar */}
-      <div className="relative z-10 w-full mt-12 px-12">
-        <div className="flex items-center gap-4">
-          <div className="flex-1 h-3 bg-white/20 rounded-full overflow-hidden backdrop-blur-sm">
-            <div className="h-full bg-white w-full" />
+      {/* Top bar: Header Sync (Q11 + Progress Bar + Logo) */}
+      <div className="relative z-30">
+        {/* Progress Bar - Locked at 100% */}
+        <div className="absolute top-[5vh] right-[22%] left-[22%] z-30 flex items-center gap-4">
+          <div className="relative h-3 flex-1 overflow-hidden rounded-full bg-[#3D3D3D]/40 backdrop-blur-sm lg:h-4">
+            <div className="h-full w-full rounded-full bg-[#1565C0] shadow-[0_0_15px_rgba(21,101,192,0.5)] transition-all duration-700 ease-out" />
           </div>
-          <span className="text-white font-bold text-xl min-w-[60px]">
-            {totalQuestions}/{totalQuestions}
+          <span className="text-base font-black text-white drop-shadow-md lg:text-lg">
+            11/11
           </span>
         </div>
       </div>
 
       {/* Main Content Area */}
-      <div className="relative z-10 flex-1 flex flex-col items-center justify-center -mt-8">
-        <div className="w-full max-w-4xl px-8 flex flex-col items-center">
-          
-          <h1 className="text-6xl font-black text-white italic tracking-tighter mb-8 drop-shadow-xl">
-            FINAL RESULTS
-          </h1>
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-start px-[2%] pt-[10vh]">
+        <h1 className="mb-6 text-6xl font-black tracking-tight text-white italic drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)] lg:text-7xl xl:text-8xl">
+          Total Score
+        </h1>
 
-          {/* Results Card */}
-          <div className="relative w-full aspect-[21/10] flex items-center justify-center p-12">
-            <Image
-              src="/resultScreen/ResultCard.png"
-              alt="Result Card"
-              fill
-              className="object-contain"
-            />
-            
-            <div className="relative z-20 w-full flex flex-col items-center px-24">
-               <div className="text-center mb-8">
-                  <span className="text-2xl font-bold text-[#002D54] opacity-70 uppercase tracking-widest">Your Score</span>
-                  <div className="text-8xl font-black text-[#E53935]">
-                    {correctCount}<span className="text-4xl text-[#002D54]/30 mx-2">/</span>{totalQuestions}
-                  </div>
-               </div>
+        {/* Expanded Results Card */}
+        <div
+          className="relative max-h-[60vh] w-full max-w-[1550px] drop-shadow-2xl"
+          style={{ aspectRatio: "2/1" }}
+        >
+          <Image
+            src="/resultScreen/ResultCard.png"
+            alt="Result Card"
+            fill
+            className="object-contain"
+          />
 
-               {/* Coin Grid */}
-               <div className="flex flex-wrap justify-center gap-4 max-w-2xl">
-                 {results.map((result, index) => (
-                   <div key={index} className="relative group flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-500" style={{ animationDelay: `${index * 50}ms` }}>
-                      <div className="relative w-16 h-16 drop-shadow-lg">
-                        <Image
-                          src={result.isCorrect ? "/resultScreen/CorrectCoin.png" : "/resultScreen/wrongCoin.png"}
-                          alt={`Q${index+1}`}
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <span className="mt-1 text-[10px] font-black text-[#002D54]/50">Q{index + 1}</span>
-                   </div>
-                 ))}
-               </div>
+          {/* Internal Content Overlays */}
+          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center pt-8">
+            {/* Minimalist Score Display (Optional, based on target design 1) */}
+
+            {/* 11-Coin Grid - Balanced and centered */}
+            <div className="grid grid-cols-6 gap-x-6 gap-y-8 px-[12%] lg:gap-x-10 lg:gap-y-12">
+              {results.slice(0, 11).map((result, index) => (
+                <div
+                  key={index}
+                  className="relative h-[200px] w-[200px] transform animate-in duration-500 fade-in zoom-in"
+                  style={{ animationDelay: `${index * 80}ms` }}
+                >
+                  <Image
+                    src={
+                      result.isCorrect
+                        ? "/resultScreen/CorrectCoin.png"
+                        : "/resultScreen/wrongCoin.png"
+                    }
+                    alt={`Coin ${index + 1}`}
+                    fill
+                    className="object-contain drop-shadow-xl"
+                  />
+                </div>
+              ))}
             </div>
           </div>
+        </div>
 
-          {/* Actions */}
-          <div className="flex gap-6 mt-12">
-            <button
-              onClick={onRestart}
-              className="flex items-center gap-3 px-12 py-4 bg-white text-[#002D54] rounded-full text-xl font-black hover:bg-gray-100 transition-all active:scale-95 shadow-xl"
-            >
-              <RotateCcw size={24} />
-              RESTART
-            </button>
-            <button
-              onClick={handleDownload}
-              className="flex items-center gap-3 px-12 py-4 bg-[#E53935] text-white rounded-full text-xl font-black hover:bg-[#C62828] transition-all active:scale-95 shadow-xl"
-            >
-              <Download size={24} />
-              DOWNLOAD
-            </button>
-          </div>
+        {/* Footer Interaction Instruction (Animated Pulse) */}
+        <div className="mt-12 animate-pulse text-2xl font-black tracking-widest text-white/70 uppercase lg:text-3xl">
+          Tap anywhere to restart
         </div>
       </div>
     </div>
