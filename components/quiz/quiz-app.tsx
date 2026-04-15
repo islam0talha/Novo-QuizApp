@@ -163,7 +163,7 @@ export function QuizApp() {
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-[2%] pb-1">
         {/* Question Card — use actual card aspect ratio (2:1) so image fills perfectly */}
         <div
-          className="relative max-h-screen w-full max-w-[1600px]"
+          className="relative max-h-[70vh] w-full max-w-[1550px]"
           style={{ aspectRatio: "2/1" }}
         >
           <Image
@@ -185,72 +185,71 @@ export function QuizApp() {
             </h2>
           </div>
 
-          {/* Answer Options Grid — Positioned in the lower section of the white area */}
-          <div className="absolute right-[8%] bottom-[10%] left-[8%] z-20 grid grid-cols-2 gap-x-6 gap-y-3 lg:gap-y-4">
+          {/* Answer Options Grid — Taller, narrower cards to allow text wrapping */}
+          <div className="absolute right-[10%] bottom-[18%] left-[10%] z-20 grid w-full max-w-6xl grid-cols-2 gap-x-6 gap-y-4 lg:gap-x-10 lg:gap-y-5 xl:gap-x-12">
             {currentQuestion.options.map((option, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedOption(index)}
-                className="group relative transition-transform hover:scale-[1.01] active:scale-[0.99]"
+                className="group relative h-24 w-full transition-transform hover:scale-[1.02] active:scale-[0.98] lg:h-28 xl:h-32"
                 type="button"
               >
-                <div
-                  className="relative flex w-full items-center"
-                  style={{ height: "clamp(40px, 6vh, 64px)" }}
-                >
-                  <Image
-                    src="/quetionsScreen/answerCard.png"
-                    alt=""
-                    fill
-                    className={`object-fill transition-all ${
+                <Image
+                  src="/quetionsScreen/answerCard.png"
+                  alt=""
+                  fill
+                  className="object-fill opacity-100 transition-all"
+                />
+
+                <div className="relative z-30 flex h-full w-full items-center px-6 lg:px-8">
+                  <span
+                    className={`mr-3 shrink-0 text-lg font-black lg:text-xl xl:text-2xl ${
                       selectedOption === index
-                        ? "opacity-100 brightness-110"
-                        : "opacity-90 group-hover:opacity-100"
+                        ? "text-[#C62828]"
+                        : "text-[#002D54]"
                     }`}
-                  />
-                  {/* Selection ring */}
-                  {selectedOption === index && (
-                    <div className="absolute inset-0.5 z-20 rounded-md border-2 border-[#1565C0] shadow-[0_0_15px_rgba(21,101,192,0.3)]" />
-                  )}
-                  <div className="relative z-30 flex w-full items-center px-6">
-                    <span
-                      className={`mr-3 shrink-0 text-base font-black lg:text-lg ${
-                        selectedOption === index
-                          ? "text-[#1565C0]"
-                          : "text-[#002D54]"
-                      }`}
-                    >
-                      {letterLabels[index]}.
-                    </span>
-                    <span className="text-left text-sm font-semibold text-[#002D54] lg:text-base">
-                      {option}
-                    </span>
-                  </div>
+                  >
+                    {letterLabels[index]}.
+                  </span>
+                  <span
+                    className={`text-left text-sm leading-tight font-bold lg:text-base xl:text-lg ${
+                      selectedOption === index
+                        ? "text-[#C62828]"
+                        : "text-[#002D54]"
+                    }`}
+                  >
+                    {option}
+                  </span>
                 </div>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Confirm Button — right-aligned, below card */}
-        <div className="mt-2 flex w-full max-w-[1200px] justify-end">
+        {/* Confirm Button Area — Aligned with the card's right edge */}
+        <div className="mt-4 flex w-full max-w-[1600px] justify-end pr-10">
           <button
             onClick={handleConfirm}
             disabled={selectedOption === null}
-            className={`rounded-full border-2 px-8 py-2 text-sm font-bold transition-all duration-300 ${
+            className={`relative h-12 w-48 transition-all active:scale-95 lg:h-14 lg:w-56 ${
               selectedOption === null
-                ? "cursor-not-allowed border-white/30 bg-transparent text-white/30"
-                : "border-white bg-transparent text-white shadow-lg hover:-translate-y-0.5 hover:bg-white hover:text-[#002D54]"
+                ? "cursor-not-allowed opacity-40 grayscale"
+                : "drop-shadow-xl hover:-translate-y-1 hover:brightness-110"
             }`}
           >
-            Confirm
+            <Image
+              src="/quetionsScreen/confimButton.png"
+              alt="Confirm"
+              fill
+              className="object-contain"
+            />
           </button>
         </div>
       </div>
 
       {/* References Footer */}
-      <div className="relative z-10 w-full px-6 pt-1 pb-3">
-        <div className="flex flex-wrap gap-x-4 text-[10px] leading-relaxed text-white/50 italic">
+      <div className="relative z-10 w-full px-8 pt-1 pb-4">
+        <div className="flex flex-wrap gap-x-6 text-[11px] leading-relaxed text-white/40 italic lg:text-xs">
           {currentQuestion.refs.map((ref, i) => (
             <span key={i}>
               {i + 1}. {ref}
