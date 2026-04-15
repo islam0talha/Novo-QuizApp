@@ -131,68 +131,98 @@ export function QuizApp() {
         />
       </div>
 
-      {/* Progress bar */}
-      <div className="relative z-10 mt-12 w-full px-12">
-        <div className="flex items-center gap-4">
-          <div className="h-3 flex-1 overflow-hidden rounded-full bg-white/20 backdrop-blur-sm">
-            <div
-              className="h-full bg-white transition-all duration-500 ease-out"
-              style={{
-                width: `${((currentIndex + 1) / totalQuestions) * 100}%`,
-              }}
-            />
-          </div>
-          <span className="min-w-[60px] text-xl font-bold text-white">
-            {currentIndex + 1}/{totalQuestions}
-          </span>
+      {/* Top bar: Q badge + Progress bar + Logo area */}
+      <div className="relative z-10 flex w-full items-center px-6 pt-3">
+        {/* Q Badge - top left */}
+        <div className="text-[2.5rem] leading-none font-black text-white drop-shadow-[0_3px_12px_rgba(0,0,0,0.4)]">
+          Q{currentIndex + 1}
         </div>
+
+        {/* Progress bar - centered, compact */}
+        <div className="flex flex-1 items-center justify-center px-8">
+          <div className="flex w-full max-w-[260px] items-center gap-3">
+            <div className="h-[6px] flex-1 overflow-hidden rounded-full bg-white/25">
+              <div
+                className="h-full rounded-full bg-[#1565C0] transition-all duration-500 ease-out"
+                style={{
+                  width: `${((currentIndex + 1) / totalQuestions) * 100}%`,
+                }}
+              />
+            </div>
+            <span className="text-sm font-bold whitespace-nowrap text-white">
+              {currentIndex + 1}/{totalQuestions}
+            </span>
+          </div>
+        </div>
+
+        {/* Spacer for logo (already in BG image) */}
+        <div className="w-20" />
       </div>
 
-      {/* Main Content Area */}
-      <div className="relative z-10 -mt-8 flex flex-1 items-center justify-center">
-        <div className="flex w-full max-w-7xl flex-col items-center px-8">
-          {/* Question Card */}
-          <div className="relative flex aspect-[21/9] w-full items-center justify-center p-12">
-            <Image
-              src="/quetionsScreen/questionCard.png"
-              alt="Question Card"
-              fill
-              className="object-contain"
-            />
-            <div className="relative z-20 max-w-4xl px-20 text-center">
-              <h2 className="text-3xl leading-tight font-extrabold text-[#002D54] md:text-4xl">
-                {currentQuestion.q}
-              </h2>
-            </div>
+      {/* Main Content Area — fills remaining space */}
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-[2%] pb-1">
+        {/* Question Card — use actual card aspect ratio (2:1) so image fills perfectly */}
+        <div
+          className="relative max-h-screen w-full max-w-[1600px]"
+          style={{ aspectRatio: "2/1" }}
+        >
+          <Image
+            src="/quetionsScreen/questionCard.png"
+            alt="Question Card"
+            fill
+            className="object-contain"
+          />
+
+          {/* Content overlay — absolute positioning for precise alignment with background assets */}
+
+          {/* Question Text Block — Center-aligned vertically with the blood drop illustration */}
+          <div className="absolute top-[26%] right-[32%] left-[8%] z-20 flex items-start gap-5 lg:gap-8">
+            <span className="shrink-0 text-6xl leading-none font-black text-[#C62828] lg:text-7xl xl:text-8xl">
+              {currentIndex + 1}
+            </span>
+            <h2 className="flex-1 pt-3 text-lg leading-tight font-extrabold text-[#002D54] lg:text-2xl xl:text-3xl">
+              {currentQuestion.q}
+            </h2>
           </div>
 
-          {/* Options Grid */}
-          <div className="mt-8 grid w-full max-w-5xl grid-cols-1 gap-x-12 gap-y-6 md:grid-cols-2">
+          {/* Answer Options Grid — Positioned in the lower section of the white area */}
+          <div className="absolute right-[8%] bottom-[10%] left-[8%] z-20 grid grid-cols-2 gap-x-6 gap-y-3 lg:gap-y-4">
             {currentQuestion.options.map((option, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedOption(index)}
-                className="group relative transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                className="group relative transition-transform hover:scale-[1.01] active:scale-[0.99]"
                 type="button"
               >
-                <div className="relative flex h-24 w-full items-center">
+                <div
+                  className="relative flex w-full items-center"
+                  style={{ height: "clamp(40px, 6vh, 64px)" }}
+                >
                   <Image
                     src="/quetionsScreen/answerCard.png"
-                    alt="Option BG"
+                    alt=""
                     fill
-                    className={`object-contain transition-opacity ${selectedOption === index ? "opacity-100" : "opacity-80 group-hover:opacity-90"}`}
+                    className={`object-fill transition-all ${
+                      selectedOption === index
+                        ? "opacity-100 brightness-110"
+                        : "opacity-90 group-hover:opacity-100"
+                    }`}
                   />
-                  {/* Selection Glow */}
+                  {/* Selection ring */}
                   {selectedOption === index && (
-                    <div className="absolute inset-x-8 inset-y-4 z-20 rounded-xl border-2 border-[#E53935]" />
+                    <div className="absolute inset-0.5 z-20 rounded-md border-2 border-[#1565C0] shadow-[0_0_15px_rgba(21,101,192,0.3)]" />
                   )}
-                  <div className="relative z-30 flex w-full items-center px-12">
+                  <div className="relative z-30 flex w-full items-center px-6">
                     <span
-                      className={`mr-4 text-2xl font-black ${selectedOption === index ? "text-[#E53935]" : "text-[#002D54]"}`}
+                      className={`mr-3 shrink-0 text-base font-black lg:text-lg ${
+                        selectedOption === index
+                          ? "text-[#1565C0]"
+                          : "text-[#002D54]"
+                      }`}
                     >
                       {letterLabels[index]}.
                     </span>
-                    <span className="text-left text-xl font-bold text-[#002D54]">
+                    <span className="text-left text-sm font-semibold text-[#002D54] lg:text-base">
                       {option}
                     </span>
                   </div>
@@ -200,31 +230,33 @@ export function QuizApp() {
               </button>
             ))}
           </div>
+        </div>
 
-          {/* Confirm Button */}
-          <div className="mt-12">
-            <button
-              onClick={handleConfirm}
-              disabled={selectedOption === null}
-              className={`rounded-full px-16 py-4 text-2xl font-black transition-all duration-300 ${
-                selectedOption === null
-                  ? "cursor-not-allowed bg-gray-400 opacity-50"
-                  : "bg-[#E53935] text-white shadow-xl hover:-translate-y-1 hover:bg-[#C62828] hover:shadow-2xl"
-              }`}
-            >
-              CONFIRM
-            </button>
-          </div>
+        {/* Confirm Button — right-aligned, below card */}
+        <div className="mt-2 flex w-full max-w-[1200px] justify-end">
+          <button
+            onClick={handleConfirm}
+            disabled={selectedOption === null}
+            className={`rounded-full border-2 px-8 py-2 text-sm font-bold transition-all duration-300 ${
+              selectedOption === null
+                ? "cursor-not-allowed border-white/30 bg-transparent text-white/30"
+                : "border-white bg-transparent text-white shadow-lg hover:-translate-y-0.5 hover:bg-white hover:text-[#002D54]"
+            }`}
+          >
+            Confirm
+          </button>
         </div>
       </div>
 
       {/* References Footer */}
-      <div className="relative z-10 flex w-full flex-wrap justify-center gap-x-8 bg-black/10 p-8 text-sm text-white/70 italic backdrop-blur-sm">
-        {currentQuestion.refs.map((ref, i) => (
-          <span key={i}>
-            [{i + 1}] {ref}
-          </span>
-        ))}
+      <div className="relative z-10 w-full px-6 pt-1 pb-3">
+        <div className="flex flex-wrap gap-x-4 text-[10px] leading-relaxed text-white/50 italic">
+          {currentQuestion.refs.map((ref, i) => (
+            <span key={i}>
+              {i + 1}. {ref}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   )

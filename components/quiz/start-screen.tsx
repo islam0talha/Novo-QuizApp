@@ -13,7 +13,7 @@ export function StartScreen({ onStart }: StartScreenProps) {
       onClick={onStart}
     >
       {/* Background Image */}
-      <div className="absolute inset-0">
+      <div className="pointer-events-none absolute inset-0">
         <Image
           src="/startScreen/startScreenBG.png"
           alt="Background"
