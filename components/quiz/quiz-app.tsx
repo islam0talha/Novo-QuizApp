@@ -154,8 +154,8 @@ export function QuizApp() {
         </div>
       </div>
 
-      {/* Main Content Area — fills remaining space */}
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-[2%] pb-1">
+      {/* Main Content Area — shifted downward for better balance */}
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-start px-[2%] pt-[20vh]">
         {/* Question Card — use actual card aspect ratio (2:1) so image fills perfectly */}
         <div
           className="relative max-h-[70vh] w-full max-w-[1550px]"
@@ -186,7 +186,7 @@ export function QuizApp() {
               <button
                 key={index}
                 onClick={() => setSelectedOption(index)}
-                className="group relative h-24 w-full transition-transform hover:scale-[1.02] active:scale-[0.98] lg:h-28 xl:h-32"
+                className="group relative h-28 w-full transition-transform hover:scale-[1.02] active:scale-[0.98] lg:h-28 xl:h-32"
                 type="button"
               >
                 <Image
@@ -196,20 +196,20 @@ export function QuizApp() {
                   className="object-fill opacity-100 transition-all"
                 />
 
-                <div className="relative z-30 flex h-full w-full items-center px-6 lg:px-8">
+                <div className="relative z-30 flex h-full w-full items-center px-8 lg:px-10">
                   <span
-                    className={`mr-3 shrink-0 text-lg font-black lg:text-xl xl:text-2xl ${
+                    className={`mr-4 shrink-0 text-xl font-black lg:text-2xl xl:text-3xl ${
                       selectedOption === index
-                        ? "text-[#C62828]"
+                        ? "text-[#E31B23]"
                         : "text-[#002D54]"
                     }`}
                   >
                     {letterLabels[index]}.
                   </span>
                   <span
-                    className={`text-left text-sm leading-tight font-bold lg:text-base xl:text-lg ${
+                    className={`text-left text-base leading-tight font-bold lg:text-lg xl:text-xl ${
                       selectedOption === index
-                        ? "text-[#C62828]"
+                        ? "text-[#E31B23]"
                         : "text-[#002D54]"
                     }`}
                   >
@@ -221,8 +221,8 @@ export function QuizApp() {
           </div>
         </div>
 
-        {/* Confirm Button Area — Aligned with the card's right edge */}
-        <div className="mt-4 flex w-full max-w-[1600px] justify-end pr-10">
+        {/* Confirm Button Area — Shifted to the left relative to previous position */}
+        <div className="mt-8 flex w-full max-w-[1550px] justify-start pl-[50%]">
           <button
             onClick={handleConfirm}
             disabled={selectedOption === null}
