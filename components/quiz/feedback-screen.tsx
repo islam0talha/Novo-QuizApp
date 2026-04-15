@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import type { QuestionResult } from "@/lib/questions"
+import { cn } from "@/lib/utils"
 
 interface FeedbackScreenProps {
   result: QuestionResult
@@ -34,7 +35,7 @@ export function FeedbackScreen({
           src="/answerScreen/Correct&WrongBG.png"
           alt="Background"
           fill
-          className="object-cover"
+          className="object-fit"
           priority
         />
       </div>
@@ -62,84 +63,109 @@ export function FeedbackScreen({
         </div>
       </div>
 
-      {/* Main Content Area */}
-      <div className="relative z-10 -mt-12 flex flex-1 items-center justify-center">
-        <div className="flex w-full max-w-6xl flex-col items-center px-8">
-          {/* Feedback Card */}
-          <div className="relative flex aspect-[16/8] w-full items-center justify-center">
-            <Image
-              src={
-                isCorrect
-                  ? "/answerScreen/correctAnswerCard.png"
-                  : "/answerScreen/WrongAnswerCard.png"
-              }
-              alt="Feedback Card"
-              fill
-              className="object-contain"
-              priority
-            />
+      {/* Main Content Area — Locked to 1920x1080 logical centering */}
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-start px-[2%] pt-[25vh]">
+        <div
+          className="relative max-h-[65vh] w-full max-w-[1550px]"
+          style={{ aspectRatio: "2/1" }}
+        >
+          {/* Feedback Card Asset */}
+          <Image
+            src={
+              isCorrect
+                ? "/answerScreen/correctAnswerCard.png"
+                : "/answerScreen/WrongAnswerCard.png"
+            }
+            alt="Feedback Card"
+            fill
+            className="object-contain"
+            priority
+          />
 
-            {/* Overlay Content */}
-            <div className="relative z-20 flex w-full items-center pr-[35%] pl-[12%]">
-              <div className="flex flex-col gap-4">
-                <h2
-                  className={`text-6xl font-black tracking-tighter italic ${isCorrect ? "text-[#FFD700]" : "text-white"}`}
-                >
-                  {isCorrect ? "CORRECT!" : "NOT QUITE!"}
-                </h2>
-                <p className="max-w-xl text-2xl leading-tight font-bold text-white">
-                  {explanation}
-                </p>
-                {!isCorrect && (
-                  <div className="mt-2 inline-block self-start rounded-lg border border-white/20 bg-white/10 px-6 py-2">
-                    <span className="mr-2 font-black tracking-wide text-[#FFD700] uppercase">
-                      Correct Answer:
-                    </span>
-                    <span className="text-xl font-black text-white">
-                      {letterLabels[result.correctAnswer]}
-                    </span>
-                  </div>
-                )}
-              </div>
+          {/* Absolute Content Overlays */}
+
+          {/* Restart Button - Top Left of white area */}
+          <button
+            onClick={onRestart}
+            className="group absolute top-[6%] left-[12%] z-30 flex items-center gap-2 transition-transform active:scale-95"
+            type="button"
+          >
+            <div className="relative overflow-hidden">
+              <Image
+                src={
+                  isCorrect
+                    ? "/answerScreen/restartButton2.png"
+                    : "/answerScreen/restartButton.png"
+                }
+                alt="Restart"
+                height={200}
+                width={200}
+                className="object-contain"
+              />
             </div>
+          </button>
 
-            {/* Restart Button (using the provided asset if suitable, or a custom one) */}
-            <button
-              onClick={onRestart}
-              className="group absolute top-[15%] right-[5%] z-30 transition-transform hover:rotate-12"
-              type="button"
+          {/* Feedback Content Area */}
+          <div className="absolute top-[22%] right-[30%] left-[12%] z-20 flex flex-col gap-10 lg:gap-10">
+            <h2
+              className={cn(
+                "text-6xl font-black tracking-tight italic lg:text-7xl xl:text-8xl",
+                isCorrect ? "text-[#002D54]" : "text-white"
+              )}
             >
-              <div className="relative h-16 w-16">
-                <Image
-                  src="/answerScreen/restartButton.png"
-                  alt="Restart"
-                  fill
-                  className="object-contain"
-                />
+              {isCorrect ? "Correct!" : "Not Quite!"}
+            </h2>
+            <p
+              className={cn(
+                "max-w-2xl text-xl leading-tight font-bold lg:text-2xl xl:text-4xl",
+                isCorrect ? "text-[#002D54]" : "text-white"
+              )}
+            >
+              {explanation}
+            </p>
+
+            {!isCorrect && result.correctAnswer !== undefined && (
+              <div
+                className={cn(
+                  "mt-2 text-lg font-black tracking-widest uppercase lg:text-4xl",
+                  isCorrect ? "text-[#002D54]" : "text-white"
+                )}
+              >
+                Correct Answer: {letterLabels[result.correctAnswer]}
               </div>
-            </button>
+            )}
           </div>
 
-          {/* Next Button */}
-          <div className="mt-12">
-            <button
-              onClick={onNext}
-              className="rounded-full bg-[#E53935] px-24 py-5 text-3xl font-black text-white shadow-2xl transition-all hover:-translate-y-1 hover:bg-[#C62828] active:scale-95"
-              type="button"
-            >
-              NEXT
-            </button>
-          </div>
+          {/* Coin / Illustration - Anchored to the right side of the card */}
+          {/* (The coin is already part of the card assets in some versions, but we ensure spacing is clear) */}
+
+          {/* Next Button - Anchored to the bottom-right of the white card */}
+          <button
+            onClick={onNext}
+            className="absolute right-[12%] bottom-[5%] z-30 drop-shadow-xl transition-all hover:scale-105 active:scale-95"
+            type="button"
+          >
+            <div className="relative h-12 w-40 lg:h-14 lg:w-48 xl:h-16 xl:w-56">
+              <Image
+                src="/answerScreen/nextButton.png"
+                alt="Next"
+                fill
+                className="object-contain"
+              />
+            </div>
+          </button>
         </div>
       </div>
 
-      {/* References Footer */}
-      <div className="relative z-10 flex w-full flex-wrap justify-center gap-x-8 bg-black/10 p-8 text-sm text-white/70 italic backdrop-blur-sm">
-        {refs.map((ref, i) => (
-          <span key={i}>
-            [{i + 1}] {ref}
-          </span>
-        ))}
+      {/* Footer — Matched with quiz-app.tsx */}
+      <div className="relative z-10 w-full px-8 pb-4">
+        <div className="flex flex-col gap-x-6 text-[11px] leading-relaxed text-white/40 italic lg:text-xs">
+          {refs.map((ref, i) => (
+            <span key={i}>
+              {i + 1}. {ref}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   )
