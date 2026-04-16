@@ -32,7 +32,7 @@ export function FeedbackScreen({
       {/* Background */}
       <div className="absolute inset-0">
         <Image
-          src="/answerScreen/Correct&WrongBG.png"
+          src="/answerScreen/Correct&WrongBG.webp"
           alt="Background"
           fill
           className="object-fit"
@@ -73,8 +73,8 @@ export function FeedbackScreen({
           <Image
             src={
               isCorrect
-                ? "/answerScreen/correctAnswerCard.png"
-                : "/answerScreen/WrongAnswerCard.png"
+                ? "/answerScreen/correctAnswerCard.webp"
+                : "/answerScreen/WrongAnswerCard.webp"
             }
             alt="Feedback Card"
             fill
@@ -94,8 +94,8 @@ export function FeedbackScreen({
               <Image
                 src={
                   isCorrect
-                    ? "/answerScreen/restartButton2.png"
-                    : "/answerScreen/restartButton.png"
+                    ? "/answerScreen/restartButton2.webp"
+                    : "/answerScreen/restartButton.webp"
                 }
                 alt="Restart"
                 height={200}
@@ -147,7 +147,7 @@ export function FeedbackScreen({
           >
             <div className="relative h-12 w-40 lg:h-14 lg:w-48 xl:h-16 xl:w-56">
               <Image
-                src="/answerScreen/nextButton.png"
+                src="/answerScreen/nextButton.webp"
                 alt="Next"
                 fill
                 className="object-contain"

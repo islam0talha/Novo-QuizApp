@@ -40,7 +40,7 @@ export function StartScreen({ onStart }: StartScreenProps) {
       {/* Background Image */}
       <div className="pointer-events-none absolute inset-0">
         <Image
-          src="/startScreen/startScreenBG.png"
+          src="/startScreen/startScreenBG.webp"
           alt="Background"
           fill
           className="object-fit"
@@ -52,7 +52,7 @@ export function StartScreen({ onStart }: StartScreenProps) {
       <div className="relative z-10 flex w-full max-w-[90vw] animate-in flex-col items-center p-6 duration-1000 fade-in zoom-in md:max-w-6xl md:p-12">
         <div className="relative flex w-full items-center justify-center overflow-hidden">
           <Image
-            src="/startScreen/startScreen.png"
+            src="/startScreen/startScreen.webp"
             alt="The Zero Bleeds Challenge"
             width={1920}
             height={1080}
@@ -67,7 +67,7 @@ export function StartScreen({ onStart }: StartScreenProps) {
             className="relative h-20 w-80 transform transition-transform active:scale-95 md:h-24 md:w-96"
           >
             <Image
-              src="/startScreen/slide 1-0٢.png"
+              src="/startScreen/slide 1-0٢.webp"
               alt="Start Quiz"
               fill
               className="object-contain"
@@ -79,4 +79,3 @@ export function StartScreen({ onStart }: StartScreenProps) {
     </div>
   )
 }
-

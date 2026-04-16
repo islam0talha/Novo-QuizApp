@@ -23,7 +23,7 @@ export function ResultsSummary({ results, onRestart }: ResultsSummaryProps) {
       {/* Background (Using same consistent BG) */}
       <div className="absolute inset-0">
         <Image
-          src="/answerScreen/Correct&WrongBG.png"
+          src="/answerScreen/Correct&WrongBG.webp"
           alt="Background"
           fill
           className="object-fit"
@@ -56,7 +56,7 @@ export function ResultsSummary({ results, onRestart }: ResultsSummaryProps) {
           style={{ aspectRatio: "2/1" }}
         >
           <Image
-            src="/resultScreen/ResultCard.png"
+            src="/resultScreen/ResultCard.webp"
             alt="Result Card"
             fill
             className="object-contain"
@@ -77,8 +77,8 @@ export function ResultsSummary({ results, onRestart }: ResultsSummaryProps) {
                   <Image
                     src={
                       result.isCorrect
-                        ? "/resultScreen/CorrectCoin.png"
-                        : "/resultScreen/wrongCoin.png"
+                        ? "/resultScreen/CorrectCoin.webp"
+                        : "/resultScreen/wrongCoin.webp"
                     }
                     alt={`Coin ${index + 1}`}
                     fill

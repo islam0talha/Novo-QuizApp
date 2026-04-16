@@ -123,7 +123,7 @@ export function QuizApp() {
       {/* Background */}
       <div className="absolute inset-0">
         <Image
-          src="/quetionsScreen/questionsBG.png"
+          src="/quetionsScreen/questionsBG.webp"
           alt="Background"
           fill
           className="object-fit"
@@ -162,7 +162,7 @@ export function QuizApp() {
           style={{ aspectRatio: "2/1" }}
         >
           <Image
-            src="/quetionsScreen/questionCard.png"
+            src="/quetionsScreen/questionCard.webp"
             alt="Question Card"
             fill
             className="object-contain"
@@ -190,7 +190,7 @@ export function QuizApp() {
                 type="button"
               >
                 <Image
-                  src="/quetionsScreen/answerCard.png"
+                  src="/quetionsScreen/answerCard.webp"
                   alt=""
                   fill
                   className="object-fill opacity-100 transition-all"
@@ -233,7 +233,7 @@ export function QuizApp() {
             }`}
           >
             <Image
-              src="/quetionsScreen/confimButton.png"
+              src="/quetionsScreen/confirmButton.webp"
               alt="Confirm"
               fill
               className="object-contain"
