@@ -2,6 +2,10 @@
 
 import { getStore } from "@netlify/blobs"
 import type { QuizAttempt } from "./questions"
+import crypto from "node:crypto"
+
+export const dynamic = "force-dynamic"
+export const runtime = "nodejs"
 
 const STORE_NAME = "quiz-attempts"
 
@@ -9,18 +13,18 @@ async function readResults(): Promise<QuizAttempt[]> {
   try {
     const store = getStore(STORE_NAME)
     const { blobs } = await store.list()
-    
+
     const attempts = await Promise.all(
       blobs.map(async (blob) => {
         try {
-          return await store.get(blob.key, { type: "json" }) as QuizAttempt
+          return (await store.get(blob.key, { type: "json" })) as QuizAttempt
         } catch (e) {
           console.error(`Error fetching blob ${blob.key}:`, e)
           return null
         }
       })
     )
-    
+
     return attempts.filter((a): a is QuizAttempt => a !== null)
   } catch (error) {
     console.error("Error reading results from Blobs:", error)
@@ -32,10 +36,10 @@ export async function saveQuizAttempt(attempt: QuizAttempt): Promise<void> {
   try {
     const store = getStore(STORE_NAME)
     const id = attempt.id || crypto.randomUUID()
-    await store.setJSON(id, { 
-      ...attempt, 
+    await store.setJSON(id, {
+      ...attempt,
       id,
-      createdAt: new Date().toISOString() 
+      createdAt: new Date().toISOString(),
     })
   } catch (error) {
     console.error("Error saving quiz attempt to Blobs:", error)
@@ -108,4 +112,3 @@ export async function getQuizStats(): Promise<{
     ),
   }
 }
-
