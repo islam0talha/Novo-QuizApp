@@ -8,22 +8,22 @@ interface StartScreenProps {
 }
 
 const ALL_ASSETS = [
-  "/startScreen/startScreenBG.png",
-  "/startScreen/startScreen.png",
-  "/startScreen/slide 1-0٢.png",
-  "/answerScreen/Correct&WrongBG.png",
-  "/answerScreen/correctAnswerCard.png",
-  "/answerScreen/nextButton.png",
-  "/answerScreen/restartButton.png",
-  "/answerScreen/restartButton2.png",
-  "/answerScreen/WrongAnswerCard.png",
-  "/quetionsScreen/answerCard.png",
-  "/quetionsScreen/confimButton.png",
-  "/quetionsScreen/questionCard.png",
-  "/quetionsScreen/questionsBG.png",
-  "/resultScreen/CorrectCoin.png",
-  "/resultScreen/ResultCard.png",
-  "/resultScreen/wrongCoin.png",
+  "/startScreen/startScreenBG.webp",
+  "/startScreen/startScreen.webp",
+  "/startScreen/slide 1-0٢.webp",
+  "/answerScreen/Correct&WrongBG.webp",
+  "/answerScreen/correctAnswerCard.webp",
+  "/answerScreen/nextButton.webp",
+  "/answerScreen/restartButton.webp",
+  "/answerScreen/restartButton2.webp",
+  "/answerScreen/WrongAnswerCard.webp",
+  "/quetionsScreen/answerCard.webp",
+  "/quetionsScreen/confirmButton.webp",
+  "/quetionsScreen/questionCard.webp",
+  "/quetionsScreen/questionsBG.webp",
+  "/resultScreen/CorrectCoin.webp",
+  "/resultScreen/ResultCard.webp",
+  "/resultScreen/wrongCoin.webp",
 ]
 
 export function StartScreen({ onStart }: StartScreenProps) {
