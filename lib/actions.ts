@@ -2,9 +2,13 @@
 
 import fs from "fs/promises"
 import path from "path"
+import os from "os"
 import type { QuizAttempt } from "./questions"
 
-const RESULTS_FILE = path.join(process.cwd(), "results.json")
+// Use /tmp for Netlify / serverless environments which have read-only file systems
+const RESULTS_FILE = process.env.NODE_ENV === "production" 
+  ? path.join(os.tmpdir(), "results.json")
+  : path.join(process.cwd(), "results.json")
 
 async function readResults(): Promise<QuizAttempt[]> {
   try {
