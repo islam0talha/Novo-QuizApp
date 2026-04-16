@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 
 interface StartScreenProps {
@@ -27,13 +27,32 @@ const ALL_ASSETS = [
 ]
 
 export function StartScreen({ onStart }: StartScreenProps) {
+  const [loadedCount, setLoadedCount] = useState(0)
+  const [isReady, setIsReady] = useState(false)
+
   useEffect(() => {
-    // Pre-cache all images
+    let count = 0
+    const total = ALL_ASSETS.length
+
+    const handleAssetLoad = () => {
+      count++
+      setLoadedCount(count)
+      if (count === total) {
+        // Add a small delay for perception of "preparing"
+        setTimeout(() => setIsReady(true), 500)
+      }
+    }
+
     ALL_ASSETS.forEach((asset) => {
-      const img = new (window as any).Image()
+      // Use window.Image to avoid conflict with Next.js Image component import
+      const img = new window.Image()
       img.src = asset
+      img.onload = handleAssetLoad
+      img.onerror = handleAssetLoad // Count as loaded even on error to prevent being stuck
     })
   }, [])
+
+  const progress = Math.round((loadedCount / ALL_ASSETS.length) * 100)
 
   return (
     <div className="fixed inset-0 z-50 flex h-screen w-screen items-center justify-center overflow-hidden bg-[#002D54]">
@@ -61,19 +80,34 @@ export function StartScreen({ onStart }: StartScreenProps) {
           />
         </div>
 
-        <div className="mt-8 flex justify-center">
-          <button
-            onClick={onStart}
-            className="relative h-20 w-80 transform transition-transform active:scale-95 md:h-24 md:w-96"
-          >
-            <Image
-              src="/startScreen/slide 1-0٢.webp"
-              alt="Start Quiz"
-              fill
-              className="object-contain"
-              priority
-            />
-          </button>
+        <div className="mt-8 flex h-24 w-full items-center justify-center">
+          {!isReady ? (
+            <div className="flex flex-col items-center gap-3">
+              <div className="h-1 w-48 overflow-hidden rounded-full bg-white/10">
+                <div
+                  className="h-full bg-white transition-all duration-300"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              <span className="text-sm font-bold tracking-widest text-white/60 uppercase">
+                Preparing Challenge... {progress}%
+              </span>
+            </div>
+          ) : (
+            <button
+              onClick={onStart}
+              className="group relative h-20 w-80 transform animate-in transition-transform duration-500 fade-in zoom-in active:scale-95 md:h-24 md:w-96"
+            >
+              <Image
+                src="/startScreen/slide 1-0٢.webp"
+                alt="Start Quiz"
+                fill
+                className="object-contain"
+                priority
+              />
+              <div className="absolute inset-0 rounded-full bg-white/0 transition-colors group-hover:bg-white/5" />
+            </button>
+          )}
         </div>
       </div>
     </div>

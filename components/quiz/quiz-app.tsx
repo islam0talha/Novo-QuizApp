@@ -246,9 +246,7 @@ export function QuizApp() {
       <div className="relative z-10 w-full px-8 pb-4">
         <div className="flex flex-col gap-x-6 text-[11px] leading-relaxed text-white/40 italic lg:text-xs">
           {currentQuestion.refs.map((ref, i) => (
-            <span key={i}>
-              {i + 1}. {ref}
-            </span>
+            <span key={i}>{ref}</span>
           ))}
         </div>
       </div>

@@ -18,11 +18,11 @@ export function PasswordGate({ children }: PasswordGateProps) {
   useEffect(() => {
     // Check localStorage for previous authentication
     const authStatus = localStorage.getItem("quiz-auth")
-    if (authStatus === "true") {
-      setIsAuthenticated(true)
-    } else {
-      setIsAuthenticated(false)
-    }
+    // Delay slightly to avoid cascading sync render warning
+    const timer = setTimeout(() => {
+      setIsAuthenticated(authStatus === "true")
+    }, 0)
+    return () => clearTimeout(timer)
   }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -47,18 +47,20 @@ export function PasswordGate({ children }: PasswordGateProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#002D54] px-4">
-      <div className="mb-8 relative w-48 h-24">
-         <Image 
-            src="/startScreen/startScreen.png" 
-            alt="Logo" 
-            fill 
-            className="object-contain"
-         />
+    <div className="fixed inset-0 z-100 flex flex-col items-center justify-center bg-[#002D54] px-4">
+      <div className="relative mb-8 h-24 w-48">
+        <Image
+          src="/startScreen/startScreen.webp"
+          alt="Logo"
+          fill
+          className="object-contain"
+        />
       </div>
-      
+
       <div className="w-full max-w-md rounded-2xl border border-white/20 bg-white/10 p-8 backdrop-blur-xl">
-        <h2 className="mb-6 text-2xl font-bold text-center text-white">Enter Password</h2>
+        <h2 className="mb-6 text-center text-2xl font-bold text-white">
+          Enter Password
+        </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="password"
@@ -69,7 +71,9 @@ export function PasswordGate({ children }: PasswordGateProps) {
             autoFocus
           />
           {error && (
-            <p className="text-sm text-red-400">Incorrect password. Please try again.</p>
+            <p className="text-sm text-red-400">
+              Incorrect password. Please try again.
+            </p>
           )}
           <button
             type="submit"

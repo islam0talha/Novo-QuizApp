@@ -36,22 +36,25 @@ export const questions: Question[] = [
     explanation:
       "Major bleeds, trauma, and perioperative settings still require reliable hemostatic control; this remains a key management challenge even in the era of non-factor prophylaxis.",
     refs: [
-      "World Federation of Hemophilia. WFH Guidelines for the Management of Hemophilia, 3rd edition. 2020.",
-      "Østergaard H, et al. Blood. 2021.",
+      "1. World Federation of Hemophilia. WFH Guidelines for the Management of Hemophilia, 3rd edition. 2020.",
+      "2. Østergaard H, et al. A factor VIIIa–mimetic bispecific antibody, Mim8, ameliorates bleeding upon severe vascular challenge in hemophilia A mice. Blood. 2021.",
     ],
   },
   {
     q: "What is the main mechanistic advantage of Mim8 compared to Emicizumab?",
     options: [
       "It targets the extrinsic pathway",
-      "Higher binding affinity to FIXa and FX",
+      "The Higher binding affinity to FIXa and FX",
       "It directly inhibits antithrombin",
       "It directly activates platelets",
     ],
     correct: 1,
     explanation:
       "Preclinical work describes Mim8 as a next-generation FVIIIa mimetic engineered to drive stronger tenase-like activity by optimizing the FIXa–FX interaction.",
-    refs: ["Østergaard H, et al. Blood. 2021.", "Persson P, et al. 2023."],
+    refs: [
+      "1. Østergaard H, et al. A factor VIIIa–mimetic bispecific antibody, Mim8, ameliorates bleeding upon severe vascular challenge in hemophilia A mice. Blood. 2021.",
+      "2. Persson P, et al. Mim8, a novel factor VIIIa mimetic bispecific antibody, shows favorable safety, pharmacokinetics, and pharmacodynamics. 2023.",
+    ],
   },
   {
     q: "Which clinical scenario best highlights a potential differentiation of Mim8?",
@@ -65,8 +68,8 @@ export const questions: Question[] = [
     explanation:
       "The differentiating narrative is usually built around sustained thrombin generation and robust hemostatic coverage in higher-demand situations.",
     refs: [
-      "Østergaard H, et al. Blood. 2021.",
-      "WFH Guidelines 3rd edition. 2020.",
+      "1. Østergaard H, et al. A factor VIIIa–mimetic bispecific antibody, Mim8, ameliorates bleeding upon severe vascular challenge in hemophilia A mice. Blood. 2021.",
+      "2. World Federation of Hemophilia. WFH Guidelines for the Management of Hemophilia, 3rd edition. 2020.",
     ],
   },
   {
@@ -80,21 +83,21 @@ export const questions: Question[] = [
     correct: 1,
     explanation:
       "If the total emicizumab volume exceeds 2 mL, the dose must be split into multiple injections.",
-    refs: ["Hemlibra (emicizumab) Prescribing Information."],
+    refs: ["1. Hemlibra (emicizumab) Prescribing Information."],
   },
   {
-    q: "Which statement is best supported for the Mim8 pen device?",
+    q: "Which statement is best supported for the Mim8 pen Device?",
     options: [
       "It requires reconstitution before use",
       "It is fixed dosing only",
-      "Patients found it ready-to-use, small-volume injection",
+      "Patients found it Ready-to-use, small-volume injection",
       "It is administered intravenously",
     ],
     correct: 2,
     explanation:
       "FRONTIER5 patient-reported outcomes showed high ease-of-use and strong patient preference for the Mim8 pen-injector compared with the prior emicizumab injection system.",
     refs: [
-      "Novo Nordisk. FRONTIER5 switching and patient-reported outcomes presented at ISTH 2025.",
+      "1. Novo Nordisk. FRONTIER5 switching and patient-reported outcomes presented at ISTH 2025.",
     ],
   },
   {
@@ -109,7 +112,7 @@ export const questions: Question[] = [
     explanation:
       "Lower ABR usually means fewer disruptions, less pain, and better physical and social functioning.",
     refs: [
-      "Kenet G, et al. Real-world bleeding and quality-of-life outcomes in hemophilia. 2021.",
+      "1. Kenet G, et al. Real-world bleeding and quality-of-life outcomes in hemophilia. 2021.",
     ],
   },
   {
@@ -123,7 +126,10 @@ export const questions: Question[] = [
     correct: 1,
     explanation:
       "Patient and caregiver studies consistently prioritize fewer bleeds, lower administration burden, and convenient dosing over superficial device attributes.",
-    refs: ["Tischer B, et al. 2018.", "Chiou SS, et al. 2025."],
+    refs: [
+      "1. Tischer B, et al. Patient preferences in the treatment of hemophilia A. 2018.",
+      "2. Chiou SS, et al. Patient and caregiver preferences for hemophilia prophylaxis. 2025.",
+    ],
   },
   {
     q: "In the phase 3 FRONTIER2 study, Mim8 prophylaxis showed what versus continued on-demand treatment in patients previously treated on demand?",
@@ -136,7 +142,9 @@ export const questions: Question[] = [
     correct: 1,
     explanation:
       "FRONTIER2 reported superiority versus on-demand treatment, with estimated mean treated-bleed ABR reductions of 97.1% for once-weekly and 98.7% for once-monthly Mim8.",
-    refs: ["ISTH 2024. FRONTIER2 phase 3 presentation."],
+    refs: [
+      "1. ISTH 2024. FRONTIER2 phase 3 presentation: efficacy and safety of Mim8 prophylaxis in adults/adolescents with hemophilia A.",
+    ],
   },
   {
     q: "What was the key efficacy endpoint used across FRONTIER efficacy presentations?",
@@ -149,7 +157,9 @@ export const questions: Question[] = [
     correct: 1,
     explanation:
       "ABR for treated bleeds remains the standard efficacy endpoint in hemophilia prophylaxis trials.",
-    refs: ["ISTH 2024. FRONTIER2 phase 3 presentation."],
+    refs: [
+      "1. ISTH 2024. FRONTIER2 phase 3 presentation: efficacy and safety of Mim8 prophylaxis in adults/adolescents with hemophilia A.",
+    ],
   },
   {
     q: "Which pediatric phase 3 FRONTIER3 interim result is accurate for once-weekly Mim8?",
@@ -162,7 +172,7 @@ export const questions: Question[] = [
     correct: 2,
     explanation:
       "In the FRONTIER3 interim analysis, 74.3% of children on once-weekly Mim8 prophylaxis had zero treated bleeds after 26 weeks.",
-    refs: ["Novo Nordisk. FRONTIER3 interim analysis presented at EAHAD 2025."],
+    refs: ["1. Novo Nordisk. FRONTIER3 interim analysis presented at EAHAD 2025."],
   },
   {
     q: "What did FRONTIER5 show about switching from emicizumab to Mim8?",
@@ -176,7 +186,7 @@ export const questions: Question[] = [
     explanation:
       "FRONTIER5 showed a direct switch from emicizumab to Mim8 without washout was well tolerated, with strong preference for the Mim8 pen-injector.",
     refs: [
-      "Novo Nordisk. FRONTIER5 switching and patient-reported outcomes presented at ISTH 2025.",
+      "1. Novo Nordisk. FRONTIER5 switching and patient-reported outcomes presented at ISTH 2025.",
     ],
   },
 ]
