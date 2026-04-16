@@ -1,8 +1,15 @@
 "use server"
 
 import fs from "fs/promises"
-import { RESULTS_FILE } from "./paths"
+import os from "os"
+import path from "path"
 import type { QuizAttempt } from "./questions"
+
+// Use /tmp for Netlify / serverless environments which have read-only file systems
+const RESULTS_FILE =
+  process.env.NODE_ENV === "production"
+    ? path.join(os.tmpdir(), "results.json")
+    : path.join(process.cwd(), "results.json")
 
 async function readResults(): Promise<QuizAttempt[]> {
   try {
