@@ -1,14 +1,8 @@
 "use server"
 
 import fs from "fs/promises"
-import path from "path"
-import os from "os"
+import { RESULTS_FILE } from "./paths"
 import type { QuizAttempt } from "./questions"
-
-// Use /tmp for Netlify / serverless environments which have read-only file systems
-const RESULTS_FILE = process.env.NODE_ENV === "production" 
-  ? path.join(os.tmpdir(), "results.json")
-  : path.join(process.cwd(), "results.json")
 
 async function readResults(): Promise<QuizAttempt[]> {
   try {
@@ -51,7 +45,7 @@ export async function getQuizStats(): Promise<{
   questionStats: QuestionStats[]
 }> {
   const results = await readResults()
-  
+
   // Aggregate stats per question
   const statsMap: Record<number, QuestionStats> = {}
 
@@ -67,10 +61,11 @@ export async function getQuizStats(): Promise<{
         }
       }
       statsMap[res.questionIndex].totalAttempts++
-      
+
       // Count specific option choices
       const opt = res.selectedAnswer
-      statsMap[res.questionIndex].optionBreakdown[opt] = (statsMap[res.questionIndex].optionBreakdown[opt] || 0) + 1
+      statsMap[res.questionIndex].optionBreakdown[opt] =
+        (statsMap[res.questionIndex].optionBreakdown[opt] || 0) + 1
 
       if (res.isCorrect) {
         statsMap[res.questionIndex].correctCount++
@@ -80,6 +75,8 @@ export async function getQuizStats(): Promise<{
 
   return {
     totalAttempts: results.length,
-    questionStats: Object.values(statsMap).sort((a, b) => a.questionIndex - b.questionIndex),
+    questionStats: Object.values(statsMap).sort(
+      (a, b) => a.questionIndex - b.questionIndex
+    ),
   }
 }
