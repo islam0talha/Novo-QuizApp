@@ -4,9 +4,6 @@ import { getStore } from "@netlify/blobs"
 import type { QuizAttempt } from "./questions"
 import crypto from "node:crypto"
 
-export const dynamic = "force-dynamic"
-export const runtime = "nodejs"
-
 const STORE_NAME = "quiz-attempts"
 
 async function readResults(): Promise<QuizAttempt[]> {
