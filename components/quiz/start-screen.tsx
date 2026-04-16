@@ -1,17 +1,42 @@
 "use client"
 
+import { useEffect } from "react"
 import Image from "next/image"
 
 interface StartScreenProps {
   onStart: () => void
 }
 
+const ALL_ASSETS = [
+  "/startScreen/startScreenBG.png",
+  "/startScreen/startScreen.png",
+  "/startScreen/slide 1-0٢.png",
+  "/answerScreen/Correct&WrongBG.png",
+  "/answerScreen/correctAnswerCard.png",
+  "/answerScreen/nextButton.png",
+  "/answerScreen/restartButton.png",
+  "/answerScreen/restartButton2.png",
+  "/answerScreen/WrongAnswerCard.png",
+  "/quetionsScreen/answerCard.png",
+  "/quetionsScreen/confimButton.png",
+  "/quetionsScreen/questionCard.png",
+  "/quetionsScreen/questionsBG.png",
+  "/resultScreen/CorrectCoin.png",
+  "/resultScreen/ResultCard.png",
+  "/resultScreen/wrongCoin.png",
+]
+
 export function StartScreen({ onStart }: StartScreenProps) {
+  useEffect(() => {
+    // Pre-cache all images
+    ALL_ASSETS.forEach((asset) => {
+      const img = new (window as any).Image()
+      img.src = asset
+    })
+  }, [])
+
   return (
-    <div
-      className="fixed inset-0 z-50 flex h-screen w-screen cursor-pointer items-center justify-center overflow-hidden bg-[#002D54]"
-      onClick={onStart}
-    >
+    <div className="fixed inset-0 z-50 flex h-screen w-screen items-center justify-center overflow-hidden bg-[#002D54]">
       {/* Background Image */}
       <div className="pointer-events-none absolute inset-0">
         <Image
@@ -37,11 +62,21 @@ export function StartScreen({ onStart }: StartScreenProps) {
         </div>
 
         <div className="mt-8 flex justify-center">
-          <div className="animate-pulse rounded-full border border-white/20 bg-white/10 px-8 py-3 text-sm font-semibold tracking-wider text-white uppercase backdrop-blur-md">
-            Tap anywhere to begin
-          </div>
+          <button
+            onClick={onStart}
+            className="relative h-20 w-80 transform transition-transform active:scale-95 md:h-24 md:w-96"
+          >
+            <Image
+              src="/startScreen/slide 1-0٢.png"
+              alt="Start Quiz"
+              fill
+              className="object-contain"
+              priority
+            />
+          </button>
         </div>
       </div>
     </div>
   )
 }
+

@@ -76,7 +76,7 @@ export function QuizApp() {
   const handleRestart = useCallback(() => {
     setCurrentIndex(0)
     setSelectedOption(null)
-    setPhase("question")
+    setPhase("start")
     setResults([])
     setLastResult(null)
   }, [])

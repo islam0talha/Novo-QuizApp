@@ -29,3 +29,53 @@ export async function getResultsData(): Promise<string> {
     return "[]"
   }
 }
+
+export async function resetQuizStats(): Promise<void> {
+  await fs.writeFile(RESULTS_FILE, JSON.stringify([], null, 2), "utf-8")
+}
+
+export type QuestionStats = {
+  questionIndex: number
+  questionText: string
+  totalAttempts: number
+  correctCount: number
+  optionBreakdown: Record<number, number>
+}
+
+export async function getQuizStats(): Promise<{
+  totalAttempts: number
+  questionStats: QuestionStats[]
+}> {
+  const results = await readResults()
+  
+  // Aggregate stats per question
+  const statsMap: Record<number, QuestionStats> = {}
+
+  results.forEach((attempt) => {
+    attempt.results.forEach((res) => {
+      if (!statsMap[res.questionIndex]) {
+        statsMap[res.questionIndex] = {
+          questionIndex: res.questionIndex,
+          questionText: res.question,
+          totalAttempts: 0,
+          correctCount: 0,
+          optionBreakdown: {},
+        }
+      }
+      statsMap[res.questionIndex].totalAttempts++
+      
+      // Count specific option choices
+      const opt = res.selectedAnswer
+      statsMap[res.questionIndex].optionBreakdown[opt] = (statsMap[res.questionIndex].optionBreakdown[opt] || 0) + 1
+
+      if (res.isCorrect) {
+        statsMap[res.questionIndex].correctCount++
+      }
+    })
+  })
+
+  return {
+    totalAttempts: results.length,
+    questionStats: Object.values(statsMap).sort((a, b) => a.questionIndex - b.questionIndex),
+  }
+}
