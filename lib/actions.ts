@@ -1,42 +1,63 @@
 "use server"
 
-import fs from "fs/promises"
-import os from "os"
-import path from "path"
+import { getStore } from "@netlify/blobs"
 import type { QuizAttempt } from "./questions"
 
-// Use /tmp for Netlify / serverless environments which have read-only file systems
-const RESULTS_FILE =
-  process.env.NODE_ENV === "production"
-    ? path.join(os.tmpdir(), "results.json")
-    : path.join(process.cwd(), "results.json")
+const STORE_NAME = "quiz-attempts"
 
 async function readResults(): Promise<QuizAttempt[]> {
   try {
-    const data = await fs.readFile(RESULTS_FILE, "utf-8")
-    return JSON.parse(data)
-  } catch {
+    const store = getStore(STORE_NAME)
+    const { blobs } = await store.list()
+    
+    const attempts = await Promise.all(
+      blobs.map(async (blob) => {
+        try {
+          return await store.get(blob.key, { type: "json" }) as QuizAttempt
+        } catch (e) {
+          console.error(`Error fetching blob ${blob.key}:`, e)
+          return null
+        }
+      })
+    )
+    
+    return attempts.filter((a): a is QuizAttempt => a !== null)
+  } catch (error) {
+    console.error("Error reading results from Blobs:", error)
     return []
   }
 }
 
 export async function saveQuizAttempt(attempt: QuizAttempt): Promise<void> {
-  const results = await readResults()
-  results.push(attempt)
-  await fs.writeFile(RESULTS_FILE, JSON.stringify(results, null, 2), "utf-8")
-}
-
-export async function getResultsData(): Promise<string> {
   try {
-    const data = await fs.readFile(RESULTS_FILE, "utf-8")
-    return data
-  } catch {
-    return "[]"
+    const store = getStore(STORE_NAME)
+    const id = attempt.id || crypto.randomUUID()
+    await store.setJSON(id, { 
+      ...attempt, 
+      id,
+      createdAt: new Date().toISOString() 
+    })
+  } catch (error) {
+    console.error("Error saving quiz attempt to Blobs:", error)
+    throw new Error("Failed to save quiz attempt")
   }
 }
 
+export async function getResultsData(): Promise<string> {
+  const results = await readResults()
+  return JSON.stringify(results, null, 2)
+}
+
 export async function resetQuizStats(): Promise<void> {
-  await fs.writeFile(RESULTS_FILE, JSON.stringify([], null, 2), "utf-8")
+  try {
+    const store = getStore(STORE_NAME)
+    const { blobs } = await store.list()
+    // Delete blobs one by one (Blobs API doesn't have a direct clear/delete all)
+    await Promise.all(blobs.map((blob) => store.delete(blob.key)))
+  } catch (error) {
+    console.error("Error resetting quiz stats in Blobs:", error)
+    throw new Error("Failed to reset stats")
+  }
 }
 
 export type QuestionStats = {
@@ -87,3 +108,4 @@ export async function getQuizStats(): Promise<{
     ),
   }
 }
+
